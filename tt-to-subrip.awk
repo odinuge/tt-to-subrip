@@ -54,6 +54,10 @@ function time_line(start, duration){
     gsub("\r","");
     gsub("\n *","\n");
     sub(/^[ \t]+/, "");
+    gsub(/^[\n\t]+|[\n\t]+$/,"")
+    gsub("\n\n","\n");
+    gsub("\n\n","\n");
+
     printf("%s\n\n", $0);
 }
 
