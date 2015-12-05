@@ -46,18 +46,14 @@ function time_line(start, duration){
     time_line(start,duration);
 
     # Format and print the text
-    gsub("</span>","");
-    gsub("<span style=\"italic\">", "");
-    gsub("<br />","\n");
-    sub("</p>.*", "");
-    sub(".*>","");
+    sub(/^[^<>]+>/, "");
+    sub(/^ +/, "");
+    gsub(/<\/?span[^<>]*>/,"");
+    gsub(/<\/*p>*/, "");
     gsub("\r","");
-    gsub("\n *","\n");
-    sub(/^[ \t]+/, "");
-    gsub(/^[\n\t]+|[\n\t]+$/,"")
-    gsub("\n\n","\n");
-    gsub("\n\n","\n");
-
+    gsub(/ *\n */, "");
+    gsub(/ *<br ?\/> */,"\n");
+    sub(/ +$/, "");
     printf("%s\n\n", $0);
 }
 
