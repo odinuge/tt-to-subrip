@@ -4,6 +4,10 @@ BEGIN {
     RS="</?p>?";
     # i, the SubRip index
     i = 1;
+    suffix = ".srt";
+    if (length(filename) != 0 &&! match(filename, suffix)){
+        filename = filename suffix;
+    }
 }
 
 # Parse the values to print the "timeline"
@@ -15,7 +19,7 @@ function time_line(start, duration, isEnd){
     split(duration,dur,"[:,.]")
 
     while(length(dur[4]) <3) {
-      dur[4] = dur[4] "0"
+        dur[4] = dur[4] "0"
     }
     if (isEnd) {
         for(item in dur)
@@ -30,15 +34,29 @@ function time_line(start, duration, isEnd){
 }
 
 # Loop through lines containing "begin"
+/<div xml:lang/{
+    if (length(filename) == 0) {
+        print "This subtitle contains several " \
+              "languages, so you need to provide a filename." > "/dev/stderr"
+        exit 1
+    }
+    match($0, /xml:lang=\"([^\"]*)\"/, arr)
+    newsuffix = "." arr[1] ".srt"
+    sub(suffix, newsuffix, filename)
+    suffix = newsuffix
+
+    # reset index number
+    i = 1;
+}
 /begin/{
     # Print index
-    print i++;
+    indexNum = i++;
 
     # Format and print the "timeline"
     start = gensub(/begin=|["]/,"","g",$1);
     start = gensub(/\./, ",", "g", start);
     duration = gensub(/>|dur|end|=|["]/, "", "g",$2);
-    printf(time_line(start,duration,match($2,"end")));
+    timeLine = time_line(start,duration,match($2,"end"));
 
     # Format and print the text
     sub(/^[^<>]+>/, "");
@@ -51,6 +69,12 @@ function time_line(start, duration, isEnd){
     gsub(/ *<br ?\/> */,"\n");
     gsub(/( |\t|\s)+$/, "");
     gsub(/\n( |\t|\s)+/, "\n");
-    printf("%s\n\n", $0);
+    wholeIndex = sprintf("%s\n%s%s\n\n", indexNum, timeLine, $0);
+
+    if (length(filename) == 0)
+        printf("%s", wholeIndex);
+    else
+        printf("%s", wholeIndex) > filename;
+
 }
 

@@ -23,6 +23,12 @@ Simply just use it like any other awk file.
 $ curl -s $URL | awk -f tt-to-subrip.awk > sub.srt
 ```
 
+If the subtitle contains several languages, you have to pass a filename.
+```sh
+$ curl -s $URL | awk -v filename=sub.srt -f tt-to-subrip.awk
+```
+
+
 ## FAQ
 
 ### Fuction X is not working.
