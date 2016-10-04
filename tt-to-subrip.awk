@@ -17,6 +17,11 @@ function time_line(start, duration, isEnd){
     while(length(dur[4]) <3) {
       dur[4] = dur[4] "0"
     }
+
+    while(length(sta[4]) <3) {
+        sta[4] = sta[4] "0"
+    }
+
     if (isEnd) {
         for(item in dur)
             end[item] = dur[item];
@@ -26,7 +31,10 @@ function time_line(start, duration, isEnd){
         end[2] = sta[2] + dur[2]+ int(sec/60);
         end[1] = sta[1] + dur[1] + int(min/60);
     }
-    return sprintf("%s --> %02d:%02d:%02d,%03d\n",start,end[1],end[2]%60,end[3]%60,end[4]%1000);
+    startStr = sprintf("%02d:%02d:%02d,%03d",sta[1],sta[2],sta[3],sta[4])
+    endStr = sprintf("%02d:%02d:%02d,%03d",end[1],end[2]%60,end[3]%60,end[4]%1000)
+
+    return sprintf("%s --> %s\n",startStr,endStr);
 }
 
 # Loop through lines containing "begin"
