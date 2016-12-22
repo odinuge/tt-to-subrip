@@ -6,7 +6,8 @@
 
 ## Overview
 
-I saw that the local boardcasting company supplied tt subtitles with ther internet TV. I wanted to get it in SubRip format, to make it work on all my devices. 
+Converts subtitles in ttml (TimedText Markup Language) into subrip (srt) files.
+Requires gawk.
  
 ## Install
 
@@ -17,18 +18,17 @@ $ git clone https://github.com/odinuge/tt-to-subrip/
 
 ## Usage
 
-Simply just use it like any other awk file.
+Use it like any other awk file.
 
 ```sh
-$ curl -s $URL | awk -f tt-to-subrip.awk > sub.srt
+$ curl -s "$URL" | gawk -f tt-to-subrip.awk > sub.srt
 ```
 
 ## FAQ
 
-### Fuction X is not working.
+### X is not working.
 
-Feel free to [fix(fork) it!](https://github.com/odinuge/tt-to-subrip/fork) 
-
+Feel free to submit an issue or send a pull request.
 
 ## License
 
