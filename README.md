@@ -1,6 +1,6 @@
 
 # TimedText to SubRip
-> Simple tt to srt converter, in awk.
+> Simple tt to srt converter, in (`g`)awk.
 
 ![screenshot](screenshot.png)
 

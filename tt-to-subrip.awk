@@ -1,4 +1,4 @@
-#!/usr/bin/awk -f
+#!/usr/bin/gawk -f
 BEGIN {
     # Use "<p> & </p>" to define a line
     RS="</?p>?";
